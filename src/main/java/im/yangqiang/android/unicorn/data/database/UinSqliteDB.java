@@ -34,7 +34,7 @@ import im.yangqiang.android.unicorn.data.database.table.KeyValue;
 import im.yangqiang.android.unicorn.data.database.table.ManyToOne;
 import im.yangqiang.android.unicorn.data.database.table.OneToMany;
 import im.yangqiang.android.unicorn.data.database.table.TableInfo;
-import im.yangqiang.android.unicorn.exception.database.DBException;
+import im.yangqiang.android.unicorn.exception.DBException;
 
 /**
  * 数据库操作的工具类

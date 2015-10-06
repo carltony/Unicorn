@@ -20,7 +20,7 @@ import im.yangqiang.android.unicorn.data.database.sqlite.ManyToOneLazyLoader;
 import im.yangqiang.android.unicorn.data.database.table.ManyToOne;
 import im.yangqiang.android.unicorn.data.database.table.OneToMany;
 import im.yangqiang.android.unicorn.data.database.table.Property;
-import im.yangqiang.android.unicorn.exception.database.DBException;
+import im.yangqiang.android.unicorn.exception.DBException;
 
 /**
  * 数据库反射操作工具类

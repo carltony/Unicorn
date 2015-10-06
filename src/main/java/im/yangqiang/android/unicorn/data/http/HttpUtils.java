@@ -108,15 +108,17 @@ public class HttpUtils
     {
         requestString(true, context, tag, url, param, response);
     }
-}
 
-
-class NoneCallback implements IRequestHandler
-{
-
-    @Override
-    public Map<String, String> getParams(Map<String, String> param)
+    public static class NoneCallback implements IRequestHandler
     {
-        return new HashMap<>();
+
+        @Override
+        public Map<String, String> getParams(Map<String, String> param)
+        {
+            return new HashMap<>();
+        }
     }
 }
+
+
+

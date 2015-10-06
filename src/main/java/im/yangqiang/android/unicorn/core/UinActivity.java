@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import im.yangqiang.android.unicorn.core.netstate.NetWorkUtil;
+import im.yangqiang.android.unicorn.data.http.RequestUtils;
 
 /**
  * 框架Activity，支持v4的FragmentActivity

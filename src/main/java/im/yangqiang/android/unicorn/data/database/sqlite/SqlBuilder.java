@@ -18,7 +18,7 @@ import im.yangqiang.android.unicorn.data.database.table.KeyValue;
 import im.yangqiang.android.unicorn.data.database.table.ManyToOne;
 import im.yangqiang.android.unicorn.data.database.table.Property;
 import im.yangqiang.android.unicorn.data.database.table.TableInfo;
-import im.yangqiang.android.unicorn.exception.database.DBException;
+import im.yangqiang.android.unicorn.exception.DBException;
 
 public class SqlBuilder
 {

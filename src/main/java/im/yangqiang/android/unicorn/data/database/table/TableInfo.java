@@ -13,7 +13,7 @@ import java.util.List;
 
 import im.yangqiang.android.unicorn.data.database.utils.DBClassUtils;
 import im.yangqiang.android.unicorn.data.database.utils.FieldUtils;
-import im.yangqiang.android.unicorn.exception.database.DBException;
+import im.yangqiang.android.unicorn.exception.DBException;
 
 public class TableInfo
 {

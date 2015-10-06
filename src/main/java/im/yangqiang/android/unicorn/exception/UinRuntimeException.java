@@ -5,7 +5,7 @@
  * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
-package im.yangqiang.android.unicorn.exception.database;
+package im.yangqiang.android.unicorn.exception;
 
 public class UinRuntimeException extends RuntimeException
 {
