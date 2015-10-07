@@ -17,7 +17,7 @@ import im.yangqiang.android.unicorn.data.http.RequestUtils;
  */
 public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity implements IActivity
 {
-    public T dataBinding;
+    private T dataBinding;
     /**
      * 显示提示
      *
@@ -166,7 +166,10 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
     {
         super.setContentView(layoutId);
     }
-
+    public T getDataBinding()
+    {
+        return dataBinding;
+    }
     @Override
     public void onBackPressed()
     {
@@ -213,6 +216,6 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
 
     public <M extends UinModel> M model(Class<M> cls)
     {
-        return ModelUtils.instance(cls);
+        return ModelUtils.instance(this, cls);
     }
 }

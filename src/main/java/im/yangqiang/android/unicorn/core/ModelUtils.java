@@ -1,5 +1,9 @@
 package im.yangqiang.android.unicorn.core;
 
+import android.content.Context;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +15,7 @@ public class ModelUtils
 {
     private static Map<String, UinModel> mModels = new HashMap<>();
 
-    public static <T extends UinModel> T instance(Class<T> cls)
+    public static <T extends UinModel> T instance(Context context, Class<T> cls)
     {
         String key = cls.getName();
         if (!mModels.keySet().contains(key))
@@ -23,13 +27,23 @@ public class ModelUtils
                     UinModel value = null;
                     try
                     {
-                        value = cls.newInstance();
+                        Constructor classModel=cls.getDeclaredConstructor(Context.class);
+                        classModel.setAccessible(true);
+                        value = (UinModel) classModel.newInstance(context);
                     }
                     catch (InstantiationException e)
                     {
                         e.printStackTrace();
                     }
                     catch (IllegalAccessException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    catch (NoSuchMethodException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    catch (InvocationTargetException e)
                     {
                         e.printStackTrace();
                     }
