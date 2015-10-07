@@ -96,13 +96,12 @@ public class UinModel
     /**
      * GET方式提交String数据，并使用缓存
      *
-     * @param context  Context
      * @param tag      标签
      * @param url      请求地址
      * @param param    请求参数
      * @param response 响应网络的回调
      */
-    public void requestString(Context context, Object tag, String url, Map<String, String> param, IResponse<String> response)
+    public void requestString(Object tag, String url, Map<String, String> param, IResponse<String> response)
     {
         requestString(true, tag, url, param, response);
     }
