@@ -206,24 +206,22 @@ public class ULog
         err.append("ExceptionDetailed:\n");
         err.append("====================Exception Info====================\n");
         err.append(ex.toString());
-        err.append("\n");
         StackTraceElement[] stack = ex.getStackTrace();
         for (int i = 0; i < stack.length; ++i)
         {
             StackTraceElement stackTraceElement = stack[i];
-            err.append(stackTraceElement.toString() + "\n");
+            err.append("\n\t" + stackTraceElement.toString());
         }
         Throwable cause = ex.getCause();
         if (cause != null)
         {
             err.append("【Caused by】: ");
             err.append(cause.toString());
-            err.append("\n");
             StackTraceElement[] stackTrace = cause.getStackTrace();
             for (int i = 0; i < stackTrace.length; ++i)
             {
                 StackTraceElement stackTraceElement = stackTrace[i];
-                err.append(stackTraceElement.toString() + "\n");
+                err.append("\n\t" + stackTraceElement.toString());
             }
         }
         err.append("==============================================");

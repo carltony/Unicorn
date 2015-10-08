@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 /**
  * EditText工具箱
- * Created by higgses on 14-4-17.
+ * Created by Carlton on 14-4-17.
  */
 public class EditTextUtils
 {

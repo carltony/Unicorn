@@ -24,7 +24,7 @@ import im.yangqiang.android.unicorn.data.http.server.inf.IResponse;
 
 /**
  * 网络请求工具类
- * Created by higgses on 14-5-13.
+ * Created by Carlton on 14-5-13.
  */
 public class RequestUtils
 {

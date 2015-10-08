@@ -14,7 +14,7 @@ import android.graphics.drawable.Drawable;
 
 /**
  * 图片处理帮助类
- * Created by higgses on 14-4-9.
+ * Created by Carlton on 14-4-9.
  */
 public class BitmapHelper
 {

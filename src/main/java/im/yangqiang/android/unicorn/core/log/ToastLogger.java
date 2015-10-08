@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 /**
  * 把日志用Toast的方式显示出来
- * Created by higgses on 14-5-29.
+ * Created by Carlton on 14-5-29.
  */
 public class ToastLogger implements ILogger
 {

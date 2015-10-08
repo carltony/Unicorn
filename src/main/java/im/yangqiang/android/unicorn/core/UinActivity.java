@@ -152,10 +152,6 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
         notifyApplicationActivityDestroy();
         super.onDestroy();
     }
-    public void contentView(int layoutId)
-    {
-        super.setContentView(layoutId);
-    }
     @Override
     public void setContentView(int layoutId)
     {

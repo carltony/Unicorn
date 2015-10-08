@@ -4,7 +4,7 @@ import com.android.volley.Request;
 
 /**
  * 网络请求类
- * Created by higgses on 14-5-13.
+ * Created by Carlton on 14-5-13.
  */
 public interface IRequest<T, Response>
 {

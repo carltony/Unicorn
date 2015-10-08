@@ -26,7 +26,7 @@ import im.yangqiang.android.unicorn.core.log.ULog;
 
 /**
  * android系统工具类
- * Created by higgses on 14-5-12.
+ * Created by Carlton on 14-5-12.
  */
 public class AndroidUtils
 {

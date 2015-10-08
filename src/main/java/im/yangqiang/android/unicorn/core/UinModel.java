@@ -21,10 +21,12 @@ public class UinModel
     {
         mContext = context;
     }
+
     public Context getContext()
     {
         return mContext;
     }
+
     /**
      * 使用POST方式提交Json数据
      *

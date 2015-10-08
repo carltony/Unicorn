@@ -1,7 +1,6 @@
 package im.yangqiang.android.unicorn.core;
 
 import android.app.Activity;
-import android.app.Application;
 import android.widget.Toast;
 
 import im.yangqiang.android.unicorn.core.log.ULog;
@@ -9,7 +8,7 @@ import im.yangqiang.android.unicorn.core.netstate.NetChangeObserver;
 import im.yangqiang.android.unicorn.core.netstate.NetWorkUtil;
 import im.yangqiang.android.unicorn.core.netstate.NetworkStateReceiver;
 import im.yangqiang.android.unicorn.core.toolbox.UToast;
-import im.yangqiang.android.unicorn.exception.UinAppException;
+import im.yangqiang.android.unicorn.exception.AppException;
 
 /**
  * 提供核心功能的Application
@@ -62,7 +61,7 @@ public class UinApplication extends UtilApplication
         mInstance = this;
     }
 
-    public static Application getApplication()
+    public static UinApplication getApplication()
     {
         return mInstance;
     }
@@ -73,12 +72,9 @@ public class UinApplication extends UtilApplication
     private void onCreating()
     {
         // 注册App异常崩溃处理器
-        if (isUncaughtException())
+        if (mUncaughtExceptionHandler == null)
         {
-            if (mUncaughtExceptionHandler == null)
-            {
-                mUncaughtExceptionHandler = getUncaughtExceptionHandler();
-            }
+            mUncaughtExceptionHandler = getUncaughtExceptionHandler();
             Thread.setDefaultUncaughtExceptionHandler(mUncaughtExceptionHandler);
         }
         // 网络改变的通知
@@ -113,23 +109,13 @@ public class UinApplication extends UtilApplication
     }
 
     /**
-     * 是否异常补获，如果返回true，那么程序崩溃就不会出现FC窗口
-     *
-     * @return
-     */
-    protected boolean isUncaughtException()
-    {
-        return false;
-    }
-
-    /**
      * 返回一个自定义的程序异常处理类，默认返回一个UinAppException处理
      *
      * @return
      */
     protected Thread.UncaughtExceptionHandler getUncaughtExceptionHandler()
     {
-        return new UinAppException(this);
+        return new AppException(this);
     }
 
     /**
