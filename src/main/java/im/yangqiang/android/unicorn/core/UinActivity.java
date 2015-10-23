@@ -1,6 +1,7 @@
 package im.yangqiang.android.unicorn.core;
 
 import android.app.Activity;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import im.yangqiang.android.unicorn.core.netstate.NetWorkUtil;
-import im.yangqiang.android.unicorn.data.http.RequestUtils;
 
 /**
  * 框架Activity，支持v4的FragmentActivity
@@ -18,6 +18,7 @@ import im.yangqiang.android.unicorn.data.http.RequestUtils;
 public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity implements IActivity
 {
     private T dataBinding;
+
     /**
      * 显示提示
      *
@@ -32,10 +33,12 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
     {
         getApp().showToast(resId);
     }
+
     /**
      * 第一次点击返回的系统时间
      */
     private long mFirstClickTime = 0;
+
     /**
      * 双击退出
      */
@@ -139,6 +142,7 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
     {
         hideKeyboard();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -152,20 +156,24 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
         notifyApplicationActivityDestroy();
         super.onDestroy();
     }
+
     @Override
     public void setContentView(int layoutId)
     {
         super.setContentView(layoutId);
         dataBinding = DataBindingUtil.setContentView(this, layoutId);
     }
+
     public void setContentViewNoBinding(int layoutId)
     {
         super.setContentView(layoutId);
     }
+
     public T getDataBinding()
     {
         return dataBinding;
     }
+
     @Override
     public void onBackPressed()
     {
@@ -213,5 +221,13 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
     public <M extends UinModel> M model(Class<M> cls)
     {
         return ModelUtils.instance(this, cls);
+    }
+
+    /**
+     * 如果Activity没有使用泛型，使用这个方法获取model
+     */
+    public static <M extends UinModel> M model(Context context, Class<M> cls)
+    {
+        return ModelUtils.instance(context, cls);
     }
 }

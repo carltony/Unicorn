@@ -19,7 +19,7 @@ import java.util.List;
 public class UinFragment<T extends ViewDataBinding> extends Fragment
 {
     private UinActivity mActivity;
-    private   T           dataBinding;
+    private T           dataBinding;
 
     public T getDataBinding()
     {
@@ -168,9 +168,21 @@ public class UinFragment<T extends ViewDataBinding> extends Fragment
     {
 
     }
+
     public <M extends UinModel> M model(Class<M> cls)
     {
         return (M) mActivity.model(cls);
+    }
+
+    /**
+     * 如果Fragment 没有使用泛型使用这个方法来获取模版
+     *
+     * @param fragment 当前Fragment
+     * @return 返回泛型Model
+     */
+    public static <M extends UinModel> M model(Fragment fragment, Class<M> cls)
+    {
+        return UinActivity.model(fragment.getContext(), cls);
     }
 
     public UinApplication getApp()
