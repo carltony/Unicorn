@@ -1,23 +1,17 @@
 package im.yangqiang.android.unicorn.data.http;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
 import java.util.Map;
 
-import im.yangqiang.android.unicorn.core.toolbox.BitmapUtils;
+import im.yangqiang.android.unicorn.data.http.server.FileRequest;
 import im.yangqiang.android.unicorn.data.http.server.HttpJsonRequest;
 import im.yangqiang.android.unicorn.data.http.server.HttpStringRequest;
 import im.yangqiang.android.unicorn.data.http.server.inf.IResponse;
@@ -35,74 +29,21 @@ public class RequestUtils
     {
     }
 
-//    public static void loadImage(final boolean isRound, final ImageView imageView, final int defaultId, final int errorId, String url)
-//    {
-//        ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>()
-//        {
-//            @Override
-//            public void onResponse(Bitmap response)
-//            {
-//                if (response != null)
-//                {
-//                    if (isRound)
-//                    {
-//                        response = BitmapUtils.conversionBitmapToFillet(response, 360);
-//                    }
-//                    imageView.setImageBitmap(response);
-//                }
-//                else if (defaultId != 0)
-//                {
-//                    imageView.setImageResource(defaultId);
-//                }
-//            }
-//        }, 0, 0, Bitmap.Config.ARGB_8888, new Response.ErrorListener()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError error)
-//            {
-//                if (errorId != 0)
-//                {
-//                    imageView.setImageResource(errorId);
-//                }
-//            }
-//        });
-//        imageRequest.setShouldCache(true);
-//        getRequestQueue(imageView.getContext()).add(imageRequest);
-//    }
-//
-//    public static void loadImage(ImageView imageView, String url)
-//    {
-//        loadImage(true, imageView, 0, 0, url);
-//    }
-//
-//    /**
-//     * 加载图片
-//     */
-//    public static void loadImage(NetworkImageView imageView, int defaultId, int errorId, String url)
-//    {
-//        if (imageView == null)
-//        {
-//            return;
-//        }
-//        if (mLoader == null)
-//        {
-//            mLoader = new ImageLoader(getRequestQueue(imageView.getContext()), new BitmapCache());
-//        }
-//        if (defaultId != 0)
-//        {
-//            imageView.setDefaultImageResId(defaultId);
-//        }
-//        if (errorId != 0)
-//        {
-//            imageView.setErrorImageResId(errorId);
-//        }
-//        imageView.setImageUrl(url, mLoader);
-//    }
-//
-//    public static void loadImage(NetworkImageView imageView, String url)
-//    {
-//        loadImage(imageView, 0, 0, url);
-//    }
+    /**
+     * 文件上传
+     *
+     * @param context  Context
+     * @param url      文件上传地址
+     * @param param    参数
+     * @param response 请求回调
+     */
+    public static void fileUpload(Context context, String url, Map<String, String> param, IResponse response)
+    {
+        FileRequest fileRequest = new FileRequest();
+        Request request = fileRequest.request(url, param, response);
+        request.setTag("file");
+        getRequestQueue(context).add(request);
+    }
 
     /**
      * 下载文件

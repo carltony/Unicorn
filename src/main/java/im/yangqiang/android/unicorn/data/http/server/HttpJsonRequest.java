@@ -53,7 +53,6 @@ public class HttpJsonRequest implements IRequest<Map<String, String>, JSONObject
             {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
-
                 return headers;
             }
         };
