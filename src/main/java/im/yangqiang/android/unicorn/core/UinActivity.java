@@ -164,9 +164,16 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
         dataBinding = DataBindingUtil.setContentView(this, layoutId);
     }
 
-    public void setContentViewNoBinding(int layoutId)
+    public void setContentView(int layoutId, boolean isBinding)
     {
-        super.setContentView(layoutId);
+        if(isBinding)
+        {
+            setContentView(layoutId);
+        }
+        else
+        {
+            super.setContentView(layoutId);
+        }
     }
 
     public T getDataBinding()

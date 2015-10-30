@@ -210,18 +210,18 @@ public class ULog
         for (int i = 0; i < stack.length; ++i)
         {
             StackTraceElement stackTraceElement = stack[i];
-            err.append("\n\t" + stackTraceElement.toString());
+            err.append("\n\t\t" + stackTraceElement.toString());
         }
         Throwable cause = ex.getCause();
         if (cause != null)
         {
-            err.append("【Caused by】: ");
+            err.append("\n【Caused by】: ");
             err.append(cause.toString());
             StackTraceElement[] stackTrace = cause.getStackTrace();
             for (int i = 0; i < stackTrace.length; ++i)
             {
                 StackTraceElement stackTraceElement = stackTrace[i];
-                err.append("\n\t" + stackTraceElement.toString());
+                err.append("\n\t\t" + stackTraceElement.toString());
             }
         }
         err.append("==============================================");

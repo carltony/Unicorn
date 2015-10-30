@@ -111,6 +111,18 @@ public class UinFragment<T extends ViewDataBinding> extends Fragment
         return dataBinding.getRoot();
     }
 
+    public View onCreateView(boolean isBinding, LayoutInflater inflater, int layoutId, ViewGroup container, boolean attachToParent)
+    {
+        if (isBinding)
+        {
+            return onCreateView(inflater, layoutId, container, attachToParent);
+        }
+        else
+        {
+            return inflater.inflate(layoutId, container, attachToParent);
+        }
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {

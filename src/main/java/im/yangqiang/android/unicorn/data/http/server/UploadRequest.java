@@ -9,7 +9,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -163,7 +162,7 @@ public class UploadRequest extends Request<String>
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try
         {
-            fos = new FileInputStream(new File(fileName));
+            fos = new FileInputStream(fileName);
             int data;
             while ((data = fos.read()) != -1)
             {
