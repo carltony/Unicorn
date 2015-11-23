@@ -2,9 +2,12 @@ package im.yangqiang.android.unicorn.data.http;
 
 import android.content.Context;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import im.yangqiang.android.unicorn.data.http.server.inf.IResponse;
@@ -16,6 +19,27 @@ import im.yangqiang.android.unicorn.data.http.server.inf.IResponse;
 public class HttpUtils
 {
     private static IRequestHandler requestCallback = new NoneCallback();
+    private static RequestQueue mRequestQueue;
+
+    private static RequestManager request()
+    {
+        return RequestManager.instance();
+    }
+
+    public static RequestQueue getRequestQueue(Context context)
+    {
+        if (mRequestQueue == null)
+        {
+            synchronized (RequestManager.class)
+            {
+                if (mRequestQueue == null)
+                {
+                    mRequestQueue = Volley.newRequestQueue(context);
+                }
+            }
+        }
+        return mRequestQueue;
+    }
 
     public static void setRequestCallback(IRequestHandler requestCallback)
     {
@@ -34,7 +58,8 @@ public class HttpUtils
      */
     public static void postJson(boolean isCache, Context context, Object tag, String url, Map<String, String> param, IResponse<JSONObject> response)
     {
-        RequestUtils.postJson(isCache, context, tag, url, requestCallback.getParams(param), response);
+        Request request = request().postJson(isCache, tag, url, requestCallback.onParams(param), response);
+        getRequestQueue(context).add(requestCallback.onRequest(request));
     }
 
     /**
@@ -63,7 +88,7 @@ public class HttpUtils
      */
     public static void postString(boolean isCache, Context context, Object tag, String url, Map<String, String> param, IResponse<String> response)
     {
-        RequestUtils.postString(isCache, context, tag, url, requestCallback.getParams(param), response);
+        getRequestQueue(context).add(request().postString(isCache, tag, url, requestCallback.onParams(param), response));
     }
 
     /**
@@ -92,7 +117,7 @@ public class HttpUtils
      */
     public static void requestString(boolean isCache, Context context, Object tag, String url, Map<String, String> param, IResponse<String> response)
     {
-        RequestUtils.requestString(isCache, context, tag, url, requestCallback.getParams(param), response);
+        getRequestQueue(context).add(request().requestString(isCache, tag, url, requestCallback.onParams(param), response));
     }
 
     /**
@@ -113,10 +138,39 @@ public class HttpUtils
     {
 
         @Override
-        public Map<String, String> getParams(Map<String, String> param)
+        public Map<String, String> onParams(Map<String, String> param)
         {
-            return new HashMap<>();
+            return param;
         }
+
+        @Override
+        public Request onRequest(Request request)
+        {
+            return request;
+        }
+    }
+
+    /**
+     * 取消
+     *
+     * @param context Context
+     * @param tag     标签
+     */
+    public static void cancel(Context context, Object tag)
+    {
+        HttpLog.cancel(tag);
+        getRequestQueue(context).cancelAll(tag);
+    }
+
+    /**
+     * 取消
+     *
+     * @param context Context
+     * @param filter  过滤
+     */
+    public static void cancel(Context context, RequestQueue.RequestFilter filter)
+    {
+        getRequestQueue(context).cancelAll(filter);
     }
 }
 

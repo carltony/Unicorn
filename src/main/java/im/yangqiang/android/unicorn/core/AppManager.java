@@ -40,6 +40,26 @@ public class AppManager
     }
 
     /**
+     * 返回列表
+     *
+     * @return Activity列表
+     */
+    public Stack<Activity> list()
+    {
+        return mActivityStack == null ? new Stack<Activity>() : mActivityStack;
+    }
+
+    /**
+     * Activity的数量
+     *
+     * @return 数量
+     */
+    public int count()
+    {
+        return list().size();
+    }
+
+    /**
      * 添加Activity到堆栈
      */
     public void addActivity(Activity activity)
@@ -49,7 +69,7 @@ public class AppManager
             mActivityStack = new Stack<Activity>();
         }
         mActivityStack.add(activity);
-        ULog.i(TAG, "Activity栈:" + mActivityStack);
+        ULog.i(TAG, "        ->>>>>>||所有Activity:\n" + mActivityStack);
     }
 
     /**
@@ -61,7 +81,7 @@ public class AppManager
         if (mActivityStack.size() > 0)
         {
             activity = mActivityStack.lastElement();
-            ULog.i(TAG, "当前Activtiy:" + activity);
+            ULog.i(TAG, "        ->>>>>>||当前Activity:" + activity + "\n" + mActivityStack);
         }
         return activity;
     }
@@ -84,11 +104,10 @@ public class AppManager
      */
     public void finishActivity(Activity activity)
     {
-        if (activity != null)
+        if (activity != null && mActivityStack.remove(activity))
         {
-            mActivityStack.remove(activity);
             activity.finish();
-            ULog.i(TAG, "        ->>>>>>||结束Activity:" + activity);
+            ULog.i(TAG, "        ->>>>>>||结束Activity:" + activity + "\n" + mActivityStack);
             activity = null;
         }
     }
@@ -104,7 +123,7 @@ public class AppManager
         }
         Activity activity = mActivityStack.lastElement();
         mActivityStack.remove(activity);
-        ULog.i(TAG, "        ->>>>>>||返回Activity:" + activity);
+        ULog.i(TAG, "        ->>>>>>||返回Activity:" + activity + "\n" + mActivityStack);
     }
 
     /**
@@ -157,8 +176,7 @@ public class AppManager
         {
             if (null != mActivityStack.get(i))
             {
-                mActivityStack.get(i).finish();
-                mActivityStack.remove(i);
+                mActivityStack.remove(i).finish();
             }
         }
     }

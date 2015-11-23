@@ -1,17 +1,15 @@
 package im.yangqiang.android.unicorn.core;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.json.JSONObject;
+import com.android.volley.Request;
 
 import java.util.Map;
 
 import im.yangqiang.android.unicorn.core.toolbox.SPUtils;
 import im.yangqiang.android.unicorn.data.http.HttpUtils;
 import im.yangqiang.android.unicorn.data.http.IRequestHandler;
-import im.yangqiang.android.unicorn.data.http.server.inf.IResponse;
 
 /**
  * 工具Application，包含常用的一些基本功能
@@ -21,13 +19,20 @@ public class UtilApplication extends Application implements IRequestHandler
 {
     public UtilApplication()
     {
+        super();
         HttpUtils.setRequestCallback(this);
     }
 
     @Override
-    public Map<String, String> getParams(Map<String, String> param)
+    public Map<String, String> onParams(Map<String, String> param)
     {
         return param;
+    }
+
+    @Override
+    public Request onRequest(Request request)
+    {
+        return request;
     }
 
     /**

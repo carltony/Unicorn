@@ -1,5 +1,7 @@
 package im.yangqiang.android.unicorn.data.http;
 
+import com.android.volley.Request;
+
 import java.util.Map;
 
 /**
@@ -7,5 +9,7 @@ import java.util.Map;
  */
 public interface IRequestHandler
 {
-    public Map<String, String> getParams(Map<String, String> param);
+    public Map<String, String> onParams(Map<String, String> param);
+
+    public Request onRequest(Request request);
 }

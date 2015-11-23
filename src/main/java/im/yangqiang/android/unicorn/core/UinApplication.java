@@ -44,12 +44,17 @@ public class UinApplication extends UtilApplication
      */
     private static UinApplication mInstance;
 
+    public UinApplication()
+    {
+        super();
+        mInstance = this;
+    }
+
     @Override
     public void onCreate()
     {
         getAppManager();
         super.onCreate();
-        init();
         onCreating();
     }
 
@@ -58,7 +63,7 @@ public class UinApplication extends UtilApplication
      */
     private void init()
     {
-        mInstance = this;
+
     }
 
     public static UinApplication getApplication()
