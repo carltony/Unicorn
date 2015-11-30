@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import java.lang.reflect.Field;
 
 /**
- * 继承的DialogFragment，解决sdk > 11，使用show()报错的问题：
+ * 继承的DialogFragment，解决sdk大于11，使用show()报错的问题：
  * java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
  * Created by Carlton on 11/10/15.
  */

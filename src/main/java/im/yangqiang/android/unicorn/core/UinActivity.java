@@ -18,6 +18,18 @@ import im.yangqiang.android.unicorn.core.netstate.NetWorkUtil;
 public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity implements IActivity
 {
     private T dataBinding;
+    /**
+     * 第一次点击返回的系统时间
+     */
+    private long mFirstClickTime = 0;
+
+    /**
+     * 如果Activity没有使用泛型，使用这个方法获取model
+     */
+    public static <M extends UinModel> M model(Context context, Class<M> cls)
+    {
+        return ModelUtils.instance(context, cls);
+    }
 
     /**
      * 显示提示
@@ -33,11 +45,6 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
     {
         getApp().showToast(resId);
     }
-
-    /**
-     * 第一次点击返回的系统时间
-     */
-    private long mFirstClickTime = 0;
 
     /**
      * 双击退出
@@ -157,10 +164,13 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
         super.onDestroy();
     }
 
-    @Override
-    public void setContentView(int layoutId)
+    /**
+     * 设置绑定数据的ContentView
+     *
+     * @param layoutId LayoutId
+     */
+    public void setBindingContentView(int layoutId)
     {
-        super.setContentView(layoutId);
         dataBinding = DataBindingUtil.setContentView(this, layoutId);
     }
 
@@ -174,7 +184,7 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
     {
         if (isBinding)
         {
-            setContentView(layoutId);
+            setBindingContentView(layoutId);
         }
         else
         {
@@ -234,13 +244,5 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
     public <M extends UinModel> M model(Class<M> cls)
     {
         return ModelUtils.instance(this, cls);
-    }
-
-    /**
-     * 如果Activity没有使用泛型，使用这个方法获取model
-     */
-    public static <M extends UinModel> M model(Context context, Class<M> cls)
-    {
-        return ModelUtils.instance(context, cls);
     }
 }

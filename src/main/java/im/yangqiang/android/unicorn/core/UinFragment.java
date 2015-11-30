@@ -16,10 +16,39 @@ import java.util.List;
 /**
  * Fragment
  */
-public class UinFragment<T extends ViewDataBinding> extends Fragment
+public abstract class UinFragment<T extends ViewDataBinding> extends Fragment
 {
+    Fragment mStartActivityForResultFragment;
     private UinActivity mActivity;
     private T           dataBinding;
+    private Bundle  mStateBundle           = new Bundle();
+    /**
+     * 是否恢复了状态
+     *
+     * @return
+     */
+    private boolean isRestoreInstanceState = false;
+
+    /**
+     * 如果Fragment 没有使用泛型使用这个方法来获取模版
+     *
+     * @param fragment 当前Fragment
+     * @return 返回泛型Model
+     */
+    public static <M extends UinModel> M model(Fragment fragment, Class<M> cls)
+    {
+        return UinActivity.model(fragment.getContext(), cls);
+    }
+
+    /**
+     * 是否恢复了Fragment的状态
+     *
+     * @return
+     */
+    protected boolean isRestoreInstanceState()
+    {
+        return isRestoreInstanceState;
+    }
 
     public T getDataBinding()
     {
@@ -31,6 +60,70 @@ public class UinFragment<T extends ViewDataBinding> extends Fragment
     {
         super.onCreate(savedInstanceState);
         mActivity = (UinActivity) getActivity();
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        saveInstanceState();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        isRestoreInstanceState = restoreInstanceState();
+    }
+
+    public Bundle getSaveInstanceState()
+    {
+        return mStateBundle;
+    }
+
+    private void saveInstanceState()
+    {
+        Bundle arguments = getArguments();
+        if (arguments != null)
+        {
+            onSaveState(mStateBundle);
+            arguments.putBundle("saveInstanceSate17608005921", mStateBundle);
+        }
+    }
+
+    private boolean restoreInstanceState()
+    {
+        Bundle arguments = getArguments();
+        if (arguments != null)
+        {
+            Bundle bundle = arguments.getBundle("saveInstanceSate17608005921");
+            if (bundle != null)
+            {
+                onRestoreState(bundle);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 保存状态回调
+     *
+     * @param outState
+     */
+    protected void onSaveState(Bundle outState)
+    {
+
+    }
+
+    /**
+     * 恢复状态回调
+     *
+     * @param instanceState
+     */
+    protected void onRestoreState(Bundle instanceState)
+    {
+
     }
 
     /**
@@ -123,14 +216,6 @@ public class UinFragment<T extends ViewDataBinding> extends Fragment
         }
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    Fragment mStartActivityForResultFragment;
-
     /**
      * 如果Fragment的子类调用这个方法去代替startActivityFroResult
      *
@@ -167,34 +252,23 @@ public class UinFragment<T extends ViewDataBinding> extends Fragment
         }
     }
 
-    /**
-     * 修复系统中Fragment嵌套onActivityResult不调用的BUG,在最内Fragment使用：getParentFragment().startActivityForResult()
-     * 方式启动Activity，然后这个方法会代替onActivityResult被回调
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     * @see #onActivityResult(int, int, Intent)
-     */
-    public void onUinActivityResult(int requestCode, int resultCode, Intent data)
-    {
-
-    }
+//    /**
+//     * 修复系统中Fragment嵌套onActivityResult不调用的BUG,在最内Fragment使用：getParentFragment().startActivityForResult()
+//     * 方式启动Activity，然后这个方法会代替onActivityResult被回调
+//     *
+//     * @param requestCode
+//     * @param resultCode
+//     * @param data
+//     * @see #onActivityResult(int, int, Intent)
+//     */
+//    public void onUinActivityResult(int requestCode, int resultCode, Intent data)
+//    {
+//
+//    }
 
     public <M extends UinModel> M model(Class<M> cls)
     {
         return (M) mActivity.model(cls);
-    }
-
-    /**
-     * 如果Fragment 没有使用泛型使用这个方法来获取模版
-     *
-     * @param fragment 当前Fragment
-     * @return 返回泛型Model
-     */
-    public static <M extends UinModel> M model(Fragment fragment, Class<M> cls)
-    {
-        return UinActivity.model(fragment.getContext(), cls);
     }
 
     public UinApplication getApp()

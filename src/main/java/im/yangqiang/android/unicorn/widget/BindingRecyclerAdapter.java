@@ -20,7 +20,12 @@ public abstract class BindingRecyclerAdapter<Entity, VH extends BindingRecyclerA
     private List<Entity> mList = new ArrayList<>();
     private Context             mContext;
     private OnItemClickListener mOnItemClickListener;
-    private VH mViewHolder;
+    private VH                  mViewHolder;
+    /**
+     * 被选中的Item
+     */
+    private SparseBooleanArray mSelectedItems = new SparseBooleanArray();
+
     public BindingRecyclerAdapter(Collection<Entity> entities)
     {
         if (entities == null)
@@ -29,6 +34,7 @@ public abstract class BindingRecyclerAdapter<Entity, VH extends BindingRecyclerA
         }
         mList.addAll(entities);
     }
+
     @Override
     public void onBindViewHolder(VH holder, final int position)
     {
@@ -52,11 +58,6 @@ public abstract class BindingRecyclerAdapter<Entity, VH extends BindingRecyclerA
     {
         return mContext;
     }
-
-    /**
-     * 被选中的Item
-     */
-    private SparseBooleanArray mSelectedItems = new SparseBooleanArray();
 
     public void setOnItemClickListener(OnItemClickListener listener)
     {
@@ -252,6 +253,15 @@ public abstract class BindingRecyclerAdapter<Entity, VH extends BindingRecyclerA
         notifyItemRangeInserted(start, entities.size());
     }
 
+    public void setVariable(int variableId, Object value)
+    {
+        if (mViewHolder != null)
+        {
+            mViewHolder.getBinding().setVariable(variableId, value);
+            mViewHolder.getBinding().executePendingBindings();
+        }
+    }
+
     public static class BindingHolder extends RecyclerView.ViewHolder
     {
         private ViewDataBinding binding;
@@ -265,14 +275,6 @@ public abstract class BindingRecyclerAdapter<Entity, VH extends BindingRecyclerA
         public ViewDataBinding getBinding()
         {
             return binding;
-        }
-    }
-    public void setVariable(int variableId, Object value)
-    {
-        if(mViewHolder != null)
-        {
-            mViewHolder.getBinding().setVariable(variableId, value);
-            mViewHolder.getBinding().executePendingBindings();
         }
     }
 }
