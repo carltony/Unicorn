@@ -91,7 +91,7 @@ public class AppManager
      */
     public void finishActivity()
     {
-        if (mActivityStack.empty())
+        if (mActivityStack == null || mActivityStack.empty())
         {
             return;
         }
@@ -104,7 +104,7 @@ public class AppManager
      */
     public void finishActivity(Activity activity)
     {
-        if (activity != null && mActivityStack.remove(activity))
+        if (activity != null && mActivityStack != null && mActivityStack.remove(activity))
         {
             activity.finish();
             ULog.i(TAG, "        ->>>>>>||结束Activity:" + activity + "\n" + mActivityStack);
@@ -117,7 +117,7 @@ public class AppManager
      */
     public void onBackPressed()
     {
-        if (mActivityStack.empty())
+        if (mActivityStack == null || mActivityStack.empty())
         {
             return;
         }
@@ -131,7 +131,7 @@ public class AppManager
      */
     public void removeActivity(Activity activity)
     {
-        if (activity != null)
+        if (activity != null && mActivityStack != null)
         {
             mActivityStack.remove(activity);
             activity = null;
@@ -143,6 +143,10 @@ public class AppManager
      */
     public void finishActivity(Class<?> cls)
     {
+        if (mActivityStack == null)
+        {
+            return;
+        }
         for (Activity activity : mActivityStack)
         {
             if (activity.getClass().equals(cls))
@@ -157,6 +161,10 @@ public class AppManager
      */
     public void finishAllActivity()
     {
+        if (mActivityStack == null)
+        {
+            return;
+        }
         for (int i = 0, size = mActivityStack.size(); i < size; i++)
         {
             if (null != mActivityStack.get(i))
@@ -172,6 +180,10 @@ public class AppManager
      */
     public void finishOtherActivity()
     {
+        if (mActivityStack == null)
+        {
+            return;
+        }
         for (int i = 0; i < mActivityStack.size() - 1; i++)
         {
             if (null != mActivityStack.get(i))
