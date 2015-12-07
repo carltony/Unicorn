@@ -46,7 +46,7 @@ public class AppManager
      */
     public Stack<Activity> list()
     {
-        return mActivityStack == null ? new Stack<Activity>() : mActivityStack;
+        return mActivityStack;
     }
 
     /**
@@ -56,7 +56,7 @@ public class AppManager
      */
     public int count()
     {
-        return list().size();
+        return mActivityStack == null ? 0 : mActivityStack.size();
     }
 
     /**
@@ -78,7 +78,7 @@ public class AppManager
     public Activity currentActivity()
     {
         Activity activity = null;
-        if (mActivityStack.size() > 0)
+        if (mActivityStack != null && mActivityStack.size() > 0)
         {
             activity = mActivityStack.lastElement();
             ULog.i(TAG, "        ->>>>>>||当前Activity:" + activity + "\n" + mActivityStack);

@@ -150,19 +150,19 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
         hideKeyboard();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        notifyApplicationActivityCreated();
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        notifyApplicationActivityDestroy();
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState)
+//    {
+//        super.onCreate(savedInstanceState);
+////        notifyApplicationActivityCreated();
+//    }
+//
+//    @Override
+//    protected void onDestroy()
+//    {
+////        notifyApplicationActivityDestroy();
+//        super.onDestroy();
+//    }
 
     /**
      * 设置绑定数据的ContentView
@@ -219,15 +219,15 @@ public class UinActivity<T extends ViewDataBinding> extends AppCompatActivity im
         return (UinApplication) getApplication();
     }
 
-    private void notifyApplicationActivityCreated()
-    {
-        getApp().onActivityCreated(this);
-    }
-
-    private void notifyApplicationActivityDestroy()
-    {
-        getApp().onActivityDestroy(this);
-    }
+//    private void notifyApplicationActivityCreated()
+//    {
+//        getApp().onActivityCreated(this);
+//    }
+//
+//    private void notifyApplicationActivityDestroy()
+//    {
+//        getApp().onActivityDestroy(this);
+//    }
 
     @Override
     public void onConnect(NetWorkUtil.NetType type)

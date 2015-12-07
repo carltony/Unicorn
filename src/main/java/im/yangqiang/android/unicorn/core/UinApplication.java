@@ -32,12 +32,15 @@ public class UinApplication extends UtilApplication
     /**
      * 当前的Activity,在Activity栈最顶上的Activity
      */
-    private IActivity  mCurrentActivity;
+    private IActivity                    mCurrentActivity;
     /**
      * Activity管理器
      */
-    private AppManager mAppManager;
-
+    private AppManager                   mAppManager;
+    /**
+     * App生命周期
+     */
+    private UinActivityLifecycleCallback mLifecycleCallback;
 
     /**
      * Application的单实例
@@ -48,6 +51,7 @@ public class UinApplication extends UtilApplication
     {
         super();
         mInstance = this;
+
     }
 
     @Override
@@ -56,6 +60,9 @@ public class UinApplication extends UtilApplication
         getAppManager();
         super.onCreate();
         onCreating();
+
+        mLifecycleCallback = new UinActivityLifecycleCallback(this);
+        registerActivityLifecycleCallbacks(mLifecycleCallback);
     }
 
     /**
@@ -101,6 +108,36 @@ public class UinApplication extends UtilApplication
         };
         // 注册网络改变观察者
         NetworkStateReceiver.registerObserver(mNetChangeObserver);
+    }
+
+    /**
+     * 是否在前台运行
+     *
+     * @return
+     */
+    public boolean isForeground()
+    {
+        return mLifecycleCallback.isForeground();
+    }
+
+    /**
+     * 是否在后台运行
+     *
+     * @return
+     */
+    public boolean isBackground()
+    {
+        return mLifecycleCallback.isBackground();
+    }
+
+    /**
+     * 是否运行
+     *
+     * @return
+     */
+    public boolean isRunning()
+    {
+        return getAppManager().count() > 0;
     }
 
     /**
@@ -175,13 +212,19 @@ public class UinApplication extends UtilApplication
     /**
      * 设置当前显示的Activity
      */
-    private void setCurrentActivity()
+    public void setCurrentActivity()
     {
         Activity currentActivity = mAppManager.currentActivity();
         if (currentActivity instanceof IActivity)
         {
             mCurrentActivity = (IActivity) currentActivity;
         }
+    }
+
+    public IActivity currentActivity()
+    {
+        setCurrentActivity();
+        return mCurrentActivity;
     }
 
     /**
@@ -211,25 +254,25 @@ public class UinApplication extends UtilApplication
         setCurrentActivity();
     }
 
-    public void onActivityCreated(UinActivity activity)
-    {
-        if (activity == null)
-        {
-            throw new NullPointerException("Activity is don't allow null");
-        }
-        getAppManager().addActivity(activity);
-        setCurrentActivity();
-    }
-
-    public void onActivityDestroy(UinActivity activity)
-    {
-        if (activity == null)
-        {
-            throw new NullPointerException("Activity is don't allow null");
-        }
-        getAppManager().removeActivity(activity);
-        setCurrentActivity();
-    }
+//    public void onActivityCreated(UinActivity activity)
+//    {
+//        if (activity == null)
+//        {
+//            throw new NullPointerException("Activity is don't allow null");
+//        }
+//        getAppManager().addActivity(activity);
+//        setCurrentActivity();
+//    }
+//
+//    public void onActivityDestroy(UinActivity activity)
+//    {
+//        if (activity == null)
+//        {
+//            throw new NullPointerException("Activity is don't allow null");
+//        }
+//        getAppManager().removeActivity(activity);
+//        setCurrentActivity();
+//    }
 
 
     /**
