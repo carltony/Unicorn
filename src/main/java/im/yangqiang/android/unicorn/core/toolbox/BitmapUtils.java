@@ -254,6 +254,7 @@ public class BitmapUtils
         {
             return src;
         }
+        radius = radius*2;
         int width = src.getWidth();
         int height = src.getHeight();
         Bitmap newBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
